@@ -21,6 +21,9 @@ class path:
 def escape(s: str) -> str:
     return f"\"{repr(s).strip("'").replace("\"", "\\\"")}\""
 
+def const(s: str) -> str:
+    return s.upper().replace(" ", "_")
+
 @overload
 def parse(e: Element) -> str: ...
 @overload
@@ -53,7 +56,13 @@ def parse(e: Element, p: Element | None = None) -> str:
         class attr:
             @staticmethod
             def align(v: str) -> str:
-                return f"lv_obj_align({id}, LV_ALIGN_{v.upper().replace(" ", "_")}, 0, 0);\n"
+                return f"lv_obj_align({id}, LV_ALIGN_{const(v)}, 0, 0);\n"
+            @staticmethod
+            def bg_color(v: str) -> str:
+                return f"lv_obj_set_style_bg_color({id}, lv_color_hex(0x{v[1:]}), LV_PART_MAIN);\n"
+            @staticmethod
+            def bg_opa(v: str) -> str:
+                return f"lv_obj_set_style_bg_opa({id}, LV_OPA_{const(v)}, LV_PART_MAIN);\n"
         
     s += f"lv_obj_t *{id} = lv_{name}_{"create" if pid else "active"}({pid if pid else ""});\n"
     for k, v in e.items():
