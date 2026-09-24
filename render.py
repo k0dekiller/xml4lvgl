@@ -76,7 +76,6 @@ for file in os.listdir(path.layout()):
     file = file.removesuffix(".xml")
     root = tree.getroot()
     layouts[file] = parse(root)
-    print(layouts[file])
 
 for file in os.listdir(path.src()):
     if not file.endswith(".cpp"): continue
