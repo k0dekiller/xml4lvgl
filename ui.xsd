@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="screen">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="widget" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="unique_widget_id">
+            <xs:selector xpath=".//*"/>
+            <xs:field xpath="@id"/>
+        </xs:unique>
+    </xs:element>
+
+    <xs:group name="widget">
+        <xs:choice>
+            <xs:element name="label" type="label"/>
+            <xs:element name="button" type="button"/>
+        </xs:choice>
+    </xs:group>
+
+    <xs:attributeGroup name="widget_attr">
+        <xs:attribute name="id" type="id" use="required"/>
+        <xs:attribute name="align" type="xs:string"/>
+    </xs:attributeGroup>
+    
+    <xs:complexType name="label" mixed="true">
+        <xs:sequence>
+            <xs:element name="color" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="hex" type="hex" use="required"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attributeGroup ref="widget_attr"/>
+        <xs:attribute name="recolor" type="xs:boolean"/>
+    </xs:complexType>
+
+    <xs:complexType name="button">
+        <xs:sequence>
+            <xs:group ref="widget" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attributeGroup ref="widget_attr"/>
+    </xs:complexType>
+
+    <xs:simpleType name="id">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z_][A-Za-z0-9_]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="hex">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="#[0-9a-fA-F]{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
