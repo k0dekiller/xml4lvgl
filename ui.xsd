@@ -5,8 +5,8 @@
             <xs:sequence>
                 <xs:group ref="widget" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
-            <xs:attribute name="bg_color" type="hex"/>
-            <xs:attribute name="bg_opa" type="xs:string"/>
+            <xs:attribute name="bg" type="hex"/>
+            <xs:attribute name="opa" type="xs:string"/>
         </xs:complexType>
         <xs:unique name="unique_widget_id">
             <xs:selector xpath=".//*"/>
