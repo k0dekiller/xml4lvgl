@@ -63,6 +63,9 @@ def parse(e: Element, p: Element | None = None) -> str:
             @staticmethod
             def opa(v: str) -> str:
                 return f"lv_obj_set_style_bg_opa({id}, LV_OPA_{const(v)}, LV_PART_MAIN);\n"
+            @staticmethod
+            def color(v: str) -> str:
+                return f"lv_obj_set_style_text_color({id}, lv_color_hex(0x{v[1:]}), LV_PART_MAIN);\n"
         
     s += f"lv_obj_t *{id} = lv_{name}_{"create" if pid else "active"}({pid if pid else ""});\n"
     for k, v in e.items():

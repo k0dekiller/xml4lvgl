@@ -5,8 +5,7 @@
             <xs:sequence>
                 <xs:group ref="widget" minOccurs="0" maxOccurs="unbounded"/>
             </xs:sequence>
-            <xs:attribute name="bg" type="hex"/>
-            <xs:attribute name="opa" type="xs:string"/>
+            <xs:attributeGroup ref="screen_attr"/>
         </xs:complexType>
         <xs:unique name="unique_widget_id">
             <xs:selector xpath=".//*"/>
@@ -21,7 +20,14 @@
         </xs:choice>
     </xs:group>
 
+    <xs:attributeGroup name="screen_attr">
+        <xs:attribute name="bg" type="hex"/>
+        <xs:attribute name="opa" type="xs:string"/>
+    </xs:attributeGroup>
+
     <xs:attributeGroup name="widget_attr">
+        <xs:attributeGroup ref="screen_attr"/>
+        <xs:attribute name="color" type="hex"/>
         <xs:attribute name="id" type="id" use="required"/>
         <xs:attribute name="align" type="xs:string"/>
         <xs:attribute name="ox" type="xs:string"/>
